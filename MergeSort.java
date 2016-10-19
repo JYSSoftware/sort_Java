@@ -5,7 +5,7 @@ import com.sun.scenario.effect.Merge;
  */
 public class MergeSort extends Main {
 
-    int[] helperArray;
+    private int[] helperArray;
 
     public MergeSort() {
         this.helperArray= null;
@@ -64,9 +64,7 @@ public class MergeSort extends Main {
         for (int i = low;  i <= high ; i++){
             this.helperArray[i] = array[i];
         }
-
         int left = low, right = mid + 1, current = low;
-
         int temp;
         while (left <=  mid && right <= high){
             temp = array[current];
@@ -82,12 +80,9 @@ public class MergeSort extends Main {
             }
             current++;
         }
-
         for (int i = 0; i <= mid - left; i++){
             array[current + i] = this.helperArray[left + i];
         }
-
-
     }
 
 }

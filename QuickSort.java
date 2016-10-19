@@ -8,14 +8,13 @@ public class QuickSort extends Main {
     /*
     * quickSort
     * description: calling overloaded function quickSort(int[], int, int)
-    * @param : array to be sorted
+    * @param : int[] array - array to be sorted
+    *           boolean isAscending - ascending or descending (default descending
     * @return : none
     * */
-    public int[] quickSort( int[] array){
-        return(this.quickSort(array, 0, array.length - 1));
+    public int[] quickSort( int[] array, boolean isAscending){
+        return(this.quickSort(array, 0, array.length - 1, isAscending));
     }
-
-
 
     /*
     * quickSort
@@ -24,31 +23,33 @@ public class QuickSort extends Main {
     * @param : int [] array - array to be sorted
     *           int low - lowest index position to be looked up
     *           int high - highest index position to be looked up
+    *           boolean isAscending - ascending or descending (default descending)
     * */
-    private int[] quickSort( int[] array, int low, int high){
+    private int[] quickSort( int[] array, int low, int high, boolean isAscending){
 
-        int partitionIndex = particiton(array, low, high);
+        int partitionIndex = particiton(array, low, high, isAscending);
 
         if (low < partitionIndex - 1) { //sort left half
-            quickSort(array, low, partitionIndex - 1);
+            quickSort(array, low, partitionIndex - 1, isAscending);
         }
 
         if (partitionIndex < high){ //sort right half
-            quickSort(array, partitionIndex, high);
+            quickSort(array, partitionIndex, high, isAscending);
         }
         return array;
     }
 
     /*
-    * particition
+    * particition in ascending order (if wants descending change pivot check to opposite)
     * description: split array into 2 pieces
     * @param : int[] array : array to be sorted,
-     *          int low - lowest index position to be looked up
+    *           int low - lowest index position to be looked up
     *           int high - highest index position to be looked up
+    *           bool isAscending - check if ascending or descending (default descending)
      *
     * @return : return starting index of 2nd partition
     * */
-    private int particiton(int[] array, int low, int high){
+    private int particiton(int[] array, int low, int high, boolean isAscending){
 
         int pivot = array[( low + high ) / 2]; //Pick pivot point
         int left = low, right = high;
@@ -56,13 +57,12 @@ public class QuickSort extends Main {
         //run loop while left index is less than right index
         while(left <= right){
 
-            //run loop left partition to find element to be swapped with right element (which should be on left)
-            while( pivot < array[left] )    {
-                left++; //find left index
-            }
-            //run loop right partition to find element to be swapped with left element (which should be on left)
-            while( pivot > array[right] )    {
-                right--; //find right index
+            if (isAscending) {
+                while (pivot < array[left]) left++; //find left index
+                while (pivot > array[right]) right--; //find right index
+            }else{
+                while (pivot > array[left]) left++; //find left index
+                while (pivot < array[right]) right--; //find right index
             }
 
             //if there exist elements to be swap, then swap with right partition index

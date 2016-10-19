@@ -10,15 +10,16 @@ public class Main {
         int[] test = {45,23,11,89,77,98,4,28,65,43};
 
 
-        int [] mResult = m1.mergeSort(test);
+        Heap h1 = new Heap();
+        h1.buildHeap(test, false);
+        System.out.println("max Heap");
+        print(h1.getHeapArray());
 
-        System.out.println("Merge Sort");
-        print(mResult);
+        Heap h2 = new Heap();
+        h2.buildHeap(test, true);
+        System.out.println("min Heap");
+        print(h2.getHeapArray());
 
-        int [] qResult = q1.quickSort(test);
-
-        System.out.println("Quick Sort");
-        print(qResult);
 
     }
 
