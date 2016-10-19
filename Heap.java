@@ -12,8 +12,7 @@ public class Heap extends Main {
     private boolean isMinHeap;
 
     private void init(int[] array, boolean isMinHeap){
-        this.heapArray = array == null ? null : (new QuickSort()).quickSort(array, isMinHeap);
-        this.isMinHeap = isMinHeap;
+        buildHeap(array, isMinHeap);
         this.heapSize = array == null ? 0 : array.length;
     }
 
@@ -86,6 +85,7 @@ public class Heap extends Main {
     public int[] buildHeap(int [] array, boolean isMin){
 
         this.heapSize = array.length;
+        this.isMinHeap = isMin;
         increaseSize(array);
         int index = this.heapSize/2;
 
