@@ -3,7 +3,7 @@ import com.sun.scenario.effect.Merge;
 /**
  * Created by jinyongsuk on 10/14/16.
  */
-public class MergeSort extends Main {
+public class MergeSort {
 
     private int[] helperArray;
 

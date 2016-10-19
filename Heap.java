@@ -3,7 +3,7 @@ import com.sun.xml.internal.bind.v2.model.annotation.Quick;
 /**
  * Created by jinyongsuk on 10/17/16.
  */
-public class Heap extends Main {
+public class Heap {
 
     private int[] heapArray;
     private int heapSize;

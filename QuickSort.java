@@ -2,7 +2,7 @@
 /**
  * Created by jinyongsuk on 10/15/16.
  */
-public class QuickSort extends Main {
+public class QuickSort {
 
 
     /*
