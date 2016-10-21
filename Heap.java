@@ -1,19 +1,18 @@
-import com.sun.xml.internal.bind.v2.model.annotation.Quick;
-
 /**
  * Created by jinyongsuk on 10/17/16.
  */
-public class Heap {
+public class Heap{
 
-    private int[] heapArray;
-    private int heapSize;
+    private int[] heapArray = null;
+    private int heapSize = 0;
     private int max = 0;
     private int min = 0;
-    private boolean isMinHeap;
+    private boolean isMinHeap = false;
 
     private void init(int[] array, boolean isMinHeap){
-        buildHeap(array, isMinHeap);
+
         this.heapSize = array == null ? 0 : array.length;
+        this.isMinHeap = isMinHeap;
     }
 
     public Heap(){

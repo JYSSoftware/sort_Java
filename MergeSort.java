@@ -1,5 +1,3 @@
-import com.sun.scenario.effect.Merge;
-
 /**
  * Created by jinyongsuk on 10/14/16.
  */
