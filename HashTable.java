@@ -3,6 +3,11 @@ import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 /**
  * Created by jinyongsuk on 10/20/16.
  */
+
+/*
+* HashEntry extending Node
+* Description : subClass to make LinkedList for HashTable
+* */
 class HashEntry<T> extends Node{
     String key;
     HashEntry next;
@@ -14,16 +19,59 @@ class HashEntry<T> extends Node{
     }
 }
 
-public class HashTable<T> {
-    private int size;
+/*
+* HashTable
+* Description : HashTable that contains array of table Entry(HashEntry)
+* */
+public class HashTable<T> extends Collection {
     private HashEntry[] table;
     private int TABLE_SIZE;
+    private int size;
 
     public HashTable(int ts){
         this.TABLE_SIZE = ts;
         this.size = 0;
         this.table = new HashEntry[ts];
         clearAll();
+    }
+
+    @Override
+    public int size() {
+        return this.size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return this.size() == 0? true : false;
+    }
+
+    @Override
+    public boolean remove(Object element) {
+        String key =  (element instanceof String)? (String)element : element.toString();
+        int hash = hashFunction(key);
+
+        if (this.table[hash] == null)
+            return false;
+
+        else{
+            HashEntry<T> previous = null;
+            HashEntry<T> current = this.table[hash];
+
+            while (current.next != null && !current.key.equals(key)){
+                previous = current;
+                current = current.next;
+            }
+
+            if (current.key.equals(key)){
+                if (previous == null){
+                    this.table[hash] = current.next;
+                }else {
+                    previous.next = current.next;
+                }
+                this.size--;
+                return true;
+            }else return false;
+        }
     }
 
     public T add(String key, T value){
@@ -68,34 +116,9 @@ public class HashTable<T> {
     }
 
     public void remove(String key){
-        int hash = hashFunction(key);
 
-        if (this.table[hash] == null)
-            return;
-
-        else{
-            HashEntry<T> previous = null;
-            HashEntry<T> current = this.table[hash];
-
-            while (current.next != null && !current.key.equals(key)){
-                previous = current;
-                current = current.next;
-            }
-
-            if (current.key.equals(key)){
-                if (previous == null){
-                    this.table[hash] = current.next;
-                }else {
-                    previous.next = current.next;
-                }
-                this.size--;
-            }
-
-        }
 
     }
-
-
     public void clearAll(){
         for (int i = 0; i < this.TABLE_SIZE; i++){
             table[i] = null;

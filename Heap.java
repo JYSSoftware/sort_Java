@@ -1,30 +1,102 @@
 /**
  * Created by jinyongsuk on 10/17/16.
+ * <my implementation>
+ *  	           insert  	  deleteMin  	  remove  	  findMin     findMax
+ * binary heap	  O(log n)	   O(log n)	      O(log n)	   O(1)         O(1)
+ *
+ *
+ * <when use Priority Queue with array or linkedList>
+ *  	            insert  	  deleteMin  	  remove  	  findMin
+ * ordered array	 O(n)	        O(1)	        O(n)	    O(1)
+ * ordered list	     O(n)	        O(1)	        O(1)	    O(1)
+ * unordered array   O(1)	        O(n)	        O(1)	    O(n)
+ * unordered list	 O(1)	        O(n)	        O(1)	    O(n)
  */
-public class Heap{
+public class Heap extends Collection{
 
-    private int[] heapArray = null;
-    private int heapSize = 0;
-    private int max = 0;
-    private int min = 0;
-    private boolean isMinHeap = false;
+    private int[] heapArray;
+    private int heapSize;
+    private int max;
+    private int min;
+    private boolean isMinHeap;
 
     private void init(int[] array, boolean isMinHeap){
 
         this.heapSize = array == null ? 0 : array.length;
         this.isMinHeap = isMinHeap;
+        this.max = 0;
+        this.min = 0;
     }
 
+    /*
+    *  Heap - default constructor
+    *  description: init all property with default setting
+    *               default of heap property is minHeap
+    *
+    * */
     public Heap(){
         init(null, true);
     }
 
+    /*
+    *  Heap(int[] array) - copy constructor
+    *  description: init all property with default setting
+    *               default of heap property is minHeap
+    *  @param - int[] array : array to be heap structure
+    *
+    * */
     public Heap(int[] array){
         init(array, true);
     }
 
+    /*
+    *  Heap(int[] array, boolean isMinHeap) - copy constructor
+    *  description: init all property with default setting
+    *               default of heap property is minHeap
+    *  @param - int[] array : array to be heap structure
+    *           boolean isMinHeap : take option for Min/Max heap
+    *
+    * */
     public Heap(int[] array, boolean isMinHeap){
         init(array, isMinHeap);
+    }
+
+    @Override
+    int size() {
+        return this.heapSize;
+    }
+
+    @Override
+    boolean isEmpty() {
+        return this.size() == 0? true : false;
+    }
+
+    @Override
+    boolean remove(Object element) {
+
+        if (isEmpty()) return false;
+        this.heapArray[1] = this.heapArray[this.heapSize];
+
+        buildHeap(this.heapArray, isMinHeap);
+        return true;
+    }
+
+    public void add(int element){
+        if (this.heapArray == null){
+            this.heapArray = new int []{element};
+            this.heapSize = 1;
+            return;
+        }
+
+        if (this.heapArray.length == heapSize){
+            doubleSize();
+        }
+
+        //add at last index
+        this.heapArray[++this.heapSize] = element;
+        if (this.isMinHeap()) minHeapify(this.heapSize/2);
+        else maxHeapify(this.heapSize/2);
+
     }
 
     private void minHeapify(int current){
@@ -68,7 +140,7 @@ public class Heap{
 
         if (r <= this.heapSize && this.heapArray[current] < this.heapArray[r]){
             if (this.heapArray[l] < this.heapArray[r])
-               max = r;
+                max = r;
         }
 
         if (max != current)
@@ -120,6 +192,12 @@ public class Heap{
         }
     }
 
+    private void doubleSize(){
+        int[] newArray = new int[2 * this.heapArray.length];
+        System.arraycopy(this.heapArray, 0, newArray, 0, this.heapArray.length);
+        this.heapArray = newArray;
+    }
+
     public boolean isMinHeap(){ return this.isMinHeap; }
 
     public int getMax(){return this.max;}
@@ -132,5 +210,4 @@ public class Heap{
     private int getLeftChildrenIndex(int index){return index * 2;}
 
     private int getRightChildrenIndex(int index){return index * 2 + 1;}
-
 }

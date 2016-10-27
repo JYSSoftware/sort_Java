@@ -9,7 +9,6 @@ public class Main {
 
         int[] test = {45,23,11,89,77,98,4,28,65,43};
 
-
         /*
         Heap h1 = new Heap();
         h1.buildHeap(test, false);
@@ -30,7 +29,7 @@ public class Main {
         q1.print();
 
         for (int i = 0; i < test.length; i++){
-            System.out.println( "popped : "+q1.dequeue());
+            System.out.println("popped : " + q1.dequeue());
         }
 
         q1.print();
@@ -46,6 +45,31 @@ public class Main {
         l1.print();
 
         */
+
+        String x = "----";
+        getMoveRecords(x);
+    }
+
+    public static Queue<Integer> getMoveRecords(String board){
+        char[] boardInChar = board.toCharArray();
+        Queue<Integer> tracker = new Queue<Integer>();
+        boolean found;
+        int l = 0, counter = 0;
+        for(int i = 0; i < boardInChar.length; i++){
+            if(boardInChar[i] == '-'){
+                if(l != i){
+                    l = i;}
+                counter++;
+            }
+            if(counter >= 2){
+                counter = 0;
+                l = i;
+                tracker.push(l);
+            }
+        }
+        return tracker;
+
+
     }
 
     /*

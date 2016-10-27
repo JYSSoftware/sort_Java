@@ -1,14 +1,17 @@
 /**
  * Created by jinyongsuk on 10/19/16.
+ * Insertion : O(1)
+ * Delete : O(1)
+ *
  */
 public class Queue<T> {
 
     int size;
-    Node<T> first, last;
+    Node<T> front, last;
 
     public void init(){
         this.size = 0;
-        this.first = null;
+        this.front = null;
         this.last = null;
     }
 
@@ -20,41 +23,31 @@ public class Queue<T> {
 
         Node<T> newNode = new Node<>(value);
         if (isEmpty()){
-            this.first = newNode;
+            this.last = this.front = newNode;
         }else{
-            newNode.setNext(this.last);
+            this.front.setNext(newNode);
         }
-        this.last = newNode;
+        this.front = newNode;
         this.size++;
     }
 
     public T dequeue(){
 
-        Node temp = this.last;
-        T removedValue = this.first.getData();
-
         if (isEmpty()){
-            return null;
+            throw new NullPointerException();
         }
-        else if (this.size == 1){
-            this.last = null;
-            this.first = null;
-            return removedValue;
-        }else {
-            Node pre = temp;
-            temp = temp.getNext();
 
-            while (temp.getNext() != null){
-                pre = pre.getNext();
-                temp = temp.getNext();
-            }
-            pre.setNext(null);
-            this.size--;
+        T removedValue = this.last.getData();
+        if (this.front == this.last){
+            this.front = this.last = null;
+            return removedValue;
+        } else {
+            Node temp = this.last;
+            this.last = this.last.getNext();
             removedValue = (T)temp.getData();
-            this.first = pre;
+            temp.setNext(null);
             return removedValue;
         }
-
     }
 
     public void print(){

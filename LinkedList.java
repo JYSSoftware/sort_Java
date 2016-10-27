@@ -11,7 +11,7 @@ public class LinkedList<T> extends Node<T> {
         this.head = null;
     }
 
-    public void insert(Node<T> newNode){
+    public void add(Node<T> newNode){
 
         Node pt;
 
@@ -27,7 +27,39 @@ public class LinkedList<T> extends Node<T> {
         this.size++;
     }
 
+    public void insert(int index, T data){
+
+        Node<T> temp = this.head;
+        if (isEmpty()){
+            this.head = new Node<>(data);
+            return;
+        }
+        else if (index == 0){
+            temp = new Node<>(data);
+            temp.setNext(this.head);
+            this.head = temp;
+            return;
+        }
+
+        int counter = index;
+
+        while (counter > 0){
+
+            counter--;
+            if (counter == 0){
+                Node<T> newNode = new Node<>(data);
+                newNode.setNext(temp.getNext());
+                temp.setNext(newNode);
+                this.size++;
+                return;
+            }
+            temp = temp.getNext();
+        }
+    }
+
     public T remove(T dataTobeRemoved){
+
+        if (isEmpty()) throw new NullPointerException();
 
         Node pt1 = getHead();
         while (pt1.hasNext()){
@@ -42,6 +74,19 @@ public class LinkedList<T> extends Node<T> {
         }
 
         return null;
+    }
+
+    public Node<T> get(int index){
+        Node pt = this.head;
+        if (isEmpty()) throw new NullPointerException();
+
+        int counter = index;
+
+        while (counter > 0){
+            counter--;
+            pt = pt.getNext();
+        }
+        return pt;
     }
 
     public Node<T> getHead(){
@@ -63,6 +108,8 @@ public class LinkedList<T> extends Node<T> {
     }
 
     public int getSize(){ return this.size; }
+
+    public boolean isEmpty(){ return this.size == 0? true : false; }
 
     public void print(){
 

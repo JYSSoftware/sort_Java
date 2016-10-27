@@ -48,10 +48,14 @@ public class Stack<T> {
         else {
             while (!isEmpty())
             {
-                newStack.push(pop());
+                newStack.push(this.pop());
             }
             return newStack;
         }
+    }
+
+    public Node<T> getTop(){
+        return this.tail;
     }
 
     public boolean isEmpty(){
